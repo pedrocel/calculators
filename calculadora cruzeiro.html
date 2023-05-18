@@ -1,0 +1,98 @@
+<html>
+<head>
+  <title>Calculadora de Cruzeiro para real utilizando o index </title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #333;
+      text-align: center;
+    }
+
+    label {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    input[type="text"],
+    button {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    h2 {
+      color: #333;
+      margin-top: 20px;
+    }
+
+    #resultado {
+      font-size: 24px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+  </style>
+  <script>
+    function formatarCampoD() {
+      var valorD = document.getElementById('valorD').value;
+      valorD = valorD.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+      document.getElementById('valorD').value = valorD;
+    }
+
+    function formatarCampoE() {
+      var valorE = document.getElementById('valorE').value;
+      valorE = valorE.replace(/[^0-9,.]/g, ''); // Remove todos os caracteres não numéricos, exceto ponto e vírgula
+      valorE = valorE.replace(/\./g, ''); // Remove todos os pontos
+      valorE = valorE.replace(/,/g, '.'); // Substitui a vírgula por ponto
+      document.getElementById('valorE').value = valorE;
+    }
+
+    function calcularResultado() {
+      var valorD = document.getElementById('valorD').value;
+      var valorE = document.getElementById('valorE').value;
+
+      // Remover os separadores de milhar e converter para número
+      valorD = parseFloat(valorD.replace(/\D/g, '').replace(',', '.'));
+      valorE = parseFloat(valorE.replace(/\D/g, '').replace(',', '.'));
+
+      var resultado = (valorD * valorE) / (1000 ** 4 * 2.75) / 100;
+
+      document.getElementById('resultado').innerHTML = resultado.toLocaleString('pt-BR', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+        style: 'currency',
+        currency: 'BRL'
+      });
+    }
+  </script>
+</head>
+<body>
+  <h1>Calculadora</h1>
+  <label for="valorD">Valor da moeda em Cruzeiro</label>
+  <input type="text" id="valorD" oninput="formatarCampoD()" /><br><br>
+  
+  <label for="valorE">Valor do Index</label>
+  <input type="text" id="valorE" oninput="formatarCampoE()" /><br><br>
+  
+  <button onclick="calcularResultado()">Calcular</button><br><br>
+  
+  <h2>Resultado:</h2>
+  <p id="resultado"></p>
+</body>
+</html>
